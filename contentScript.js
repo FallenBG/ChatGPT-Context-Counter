@@ -1,16 +1,19 @@
-let threshold = 75; // Default threshold value
-let contextWeight = 75; // Default context weight value
-let warningThreshold = 80; // Default warning threshold value
+let threshold = parseInt(localStorage.getItem('threshold')) || 2048;
+let contextWeight = parseInt(localStorage.getItem('contextWeight')) || 75;
+let warningThreshold = parseInt(localStorage.getItem('warningThreshold')) || 80;
 
-chrome.runtime.onMessage.addEventListener(function(message, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.threshold) {
         threshold = message.threshold;
+        localStorage.setItem('threshold', threshold);
     }
     if (message.contextWeight) {
         contextWeight = message.contextWeight;
+        localStorage.setItem('contextWeight', contextWeight);
     }
     if (message.warningThreshold) {
         warningThreshold = message.warningThreshold;
+        localStorage.setItem('warningThreshold', warningThreshold);
     }
 });
 

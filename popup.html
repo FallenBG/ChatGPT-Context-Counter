@@ -1,62 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
-    body {
-      width: 300px;
-      font-family: Arial, sans-serif;
-    }
-    .tooltip {
-      position: relative;
-      display: inline-block;
-    }
-    .tooltip .tooltiptext {
-      visibility: hidden;
-      width: 220px;
-      background-color: #555;
-      color: #fff;
-      text-align: center;
-      padding: 5px 0;
-      border-radius: 6px;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%;
-      left: 50%;
-      margin-left: -110px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .tooltip .tooltiptext::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -5px;
-      border-width: 5px;
-      border-style: solid;
-      border-color: #555 transparent transparent transparent;
-    }
-    .tooltip:hover .tooltiptext {
-      visibility: visible;
-      opacity: 1;
-    }
-  </style>
+    <style>
+        body {
+            width: 300px;
+            font-family: Arial, sans-serif;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+        }
+
+        input[type="number"] {
+            width: 5rem;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #0078d7;
+            box-shadow: 0 0 0 2px rgba(0, 120, 215, 0.5);
+        }
+
+        button {
+            margin-top: 1rem;
+            background-color: #0078d7;
+            color: #fff;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #106ebe;
+        }
+
+        .tooltip-text {
+            margin-top: 1rem;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
 <h3>Context Count Threshold</h3>
-<label for="threshold">Threshold:</label>
-<input type="number" id="threshold" min="1" max="100" />
-<div class="tooltip">
-  <span class="tooltiptext">The weight given to the word count in calculating the context count. For example, a weight of 75% means that the context count is 75% of the word count.</span>
-  <label for="context-weight">Context Weight:</label>
+<div>
+    <label for="threshold">Threshold:</label>
+    <input type="number" id="threshold" min="1" max="100" />
 </div>
-<input type="number" id="context-weight" min="1" max="100" />
-<div class="tooltip">
-  <span class="tooltiptext">The warning threshold for the context count, expressed as a percentage of the threshold value. For example, a threshold of 80% means that the warning threshold is 80% of the threshold value.</span>
-  <label for="warning-threshold">Warning Threshold:</label>
+<div>
+    <label for="context-weight">Context Weight:</label>
+    <input type="number" id="context-weight" min="1" max="100" />
 </div>
-<input type="number" id="warning-threshold" min="1" max="100" />
+<div>
+    <label for="warning-threshold">Warning Threshold:</label>
+    <input type="number" id="warning-threshold" min="1" max="100" />
+</div>
+<br>
 <button id="save">Save</button>
+<div class="tooltip-text">
+    Threshold: The context threshold is the amount of context you believe is taken under consideration by ChatGPT
+</div>
+<div class="tooltip-text">
+    Context Weight: The weight given to the word count in calculating the context count. For example, a weight of 75% means that the context count is 75% of the word count.
+</div>
+<div class="tooltip-text">
+    Warning Threshold: The warning threshold for the context count, expressed as a percentage of the threshold value. For example, a threshold of 80% means that the warning threshold is 80% of the threshold value.
+</div>
 <script src="popup.js"></script>
 </body>
 </html>
