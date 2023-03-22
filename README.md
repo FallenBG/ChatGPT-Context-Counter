@@ -13,3 +13,9 @@ This app will give you a nice indicator of how much Context is already in your c
 ------
 
 The extension was written with ChatGPT withouth me changing anything in the code.
+
+![link text](https://github.com/FallenBG/ChatGPT-Context-Counter/blob/master/screens/Screenshot_1.png)
+
+![link text](https://github.com/FallenBG/ChatGPT-Context-Counter/blob/master/screens/Screenshot_2.png)
+
+![link text](https://github.com/FallenBG/ChatGPT-Context-Counter/blob/master/screens/Screenshot_3.png)
