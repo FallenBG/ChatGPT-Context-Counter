@@ -1,7 +1,16 @@
-let threshold = 2048; // Default threshold value
-chrome.runtime.onMessage.addEventListener(function (message, sender, sendResponse) {
+let threshold = 75; // Default threshold value
+let contextWeight = 75; // Default context weight value
+let warningThreshold = 80; // Default warning threshold value
+
+chrome.runtime.onMessage.addEventListener(function(message, sender, sendResponse) {
     if (message.threshold) {
         threshold = message.threshold;
+    }
+    if (message.contextWeight) {
+        contextWeight = message.contextWeight;
+    }
+    if (message.warningThreshold) {
+        warningThreshold = message.warningThreshold;
     }
 });
 
@@ -21,39 +30,43 @@ function getTextFromNode(node) {
     return text;
 }
 
-function countWordsOnPage() {
+function countContextOnPage() {
     const targetDiv = document.querySelector('main.w-full.h-full');
+
     if (targetDiv) {
         const divText = getTextFromNode(targetDiv);
-        return countWords(divText) * 0.75;
+        return countWords(divText) * contextWeight / 100;
     } else {
         return 0;
     }
 }
 
-function updateWordCountDisplay(wordCount, threshold) {
-    let wordCountColor;
-    if (wordCount >= threshold) {
-        wordCountColor = "red";
-    } else if (wordCount >= threshold * 0.8) {
-        wordCountColor = "yellow";
+function updateContextCountDisplay(contextCount, threshold, warningThreshold) {
+    let contextCountColor;
+    if (contextCount >= threshold) {
+        contextCountColor = "red";
+    } else if (contextCount >= threshold * warningThreshold / 100) {
+        contextCountColor = "yellow";
     } else {
-        wordCountColor = "green";
+        contextCountColor = "green";
     }
-    let wordCountDisplay = document.querySelector("#wordCountDisplay");
-    if (!wordCountDisplay) {
-        wordCountDisplay = document.createElement("div");
-        wordCountDisplay.id = "wordCountDisplay";
+
+    let contextCountDisplay = document.querySelector("#contextCountDisplay");
+
+    if (!contextCountDisplay) {
+        contextCountDisplay = document.createElement("div");
+        contextCountDisplay.id = "contextCountDisplay";
         const navElement = document.querySelector("nav.flex.h-full.flex-1.flex-col.space-y-1.p-2");
-        navElement.insertAdjacentElement("afterbegin", wordCountDisplay);
+        navElement.insertAdjacentElement("afterbegin", contextCountDisplay);
     }
-    wordCountDisplay.innerHTML = `Context Count: ${wordCount}`;
-    wordCountDisplay.style.color = wordCountColor;
+
+    contextCountDisplay.innerHTML = `Context Count: ${contextCount.toFixed(2)}`;
+    contextCountDisplay.style.color = contextCountColor;
 }
 
-function updateWordCount() {
-    const wordCount = countWordsOnPage();
-    updateWordCountDisplay(wordCount, threshold);
+function updateContextCount() {
+    const contextCount = countContextOnPage();
+    updateContextCountDisplay(contextCount, threshold, warningThreshold);
 }
 
-setInterval(updateWordCount, 500); // Update the word count every 5 seconds
+setInterval(updateContextCount, 500); // Update the context count every 5 seconds

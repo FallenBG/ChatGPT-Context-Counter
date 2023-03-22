@@ -1,17 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      body {
-        width: 200px;
-        font-family: Arial, sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <h3>Context Count Threshold</h3>
-    <input type="number" id="threshold" />
-    <button id="save">Save</button>
-    <script src="popup.js"></script>
-  </body>
+<head>
+  <style>
+    body {
+      width: 300px;
+      font-family: Arial, sans-serif;
+    }
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 220px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      padding: 5px 0;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -110px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+<h3>Context Count Threshold</h3>
+<label for="threshold">Threshold:</label>
+<input type="number" id="threshold" min="1" max="100" />
+<div class="tooltip">
+  <span class="tooltiptext">The weight given to the word count in calculating the context count. For example, a weight of 75% means that the context count is 75% of the word count.</span>
+  <label for="context-weight">Context Weight:</label>
+</div>
+<input type="number" id="context-weight" min="1" max="100" />
+<div class="tooltip">
+  <span class="tooltiptext">The warning threshold for the context count, expressed as a percentage of the threshold value. For example, a threshold of 80% means that the warning threshold is 80% of the threshold value.</span>
+  <label for="warning-threshold">Warning Threshold:</label>
+</div>
+<input type="number" id="warning-threshold" min="1" max="100" />
+<button id="save">Save</button>
+<script src="popup.js"></script>
+</body>
 </html>
