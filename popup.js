@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const contextWeightInput = document.getElementById("context-weight");
     const warningThresholdInput = document.getElementById("warning-threshold");
     const saveButton = document.getElementById("save");
+    const resetButton = document.getElementById("reset");
 
     // Load the threshold, context weight, and warning threshold values from localStorage if they exist, or use defaults
     thresholdInput.value = localStorage.getItem("threshold") || 75;
@@ -21,5 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {threshold: thresholdValue, contextWeight: contextWeightValue, warningThreshold: warningThresholdValue});
         });
+    });
+
+    // Reset the threshold, context weight, and warning threshold values to their defaults when the Reset button is clicked
+    resetButton.addEventListener("click", () => {
+        thresholdInput.value = 2048;
+        contextWeightInput.value = 75;
+        warningThresholdInput.value = 80;
+        saveButton.click();
     });
 });
